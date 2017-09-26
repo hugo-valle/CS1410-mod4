@@ -16,6 +16,13 @@ private:
     int feet;
     float inches;
 public:
+    /* Constructor with no arguments */
+    Distance(): feet(0), inches(0)
+    {/*empty body*/}
+    /* Constructor with two arguments */
+    Distance(int ft, float in): feet(ft), inches(in)
+    {/*empty body*/}
+
     void setDist(int f, float i)
     {
         feet = f;
@@ -32,6 +39,7 @@ public:
     {
         cout <<"Feet "<<feet<<" and inches "<<inches<<endl;
     }
+    void add_dist(Distance d1, Distance d2);
 };
 
 // Prototypes
@@ -40,23 +48,35 @@ public:
 int main()
 {
     // Create an instance "instantiate" the class
-    Distance d1, d2;
-    // Use methods to set/access data
-    d1.setDist(6, 6.5);
-    cout<<"\nDist 1"<<endl;
+    Distance d1, d4;
+    cout<<"\nd1 = ";
     d1.showDist();
-
-    cout<<"\nDist 2"<<endl;
-    d2.setDist(3, 1.5);
+    Distance d2(8, 2);
+    Distance d3(2, 4);
+    cout<<"\nd2 = ";
     d2.showDist();
-    // Update info
-    d2.getDist();
-    cout<<"\nDist 2"<<endl;
-    d2.showDist();
-    // Access a public data member
-    d2.cm = 8.2;
-    cout<<"cm is "<< d2.cm <<endl;
+    cout<<"\nd3 = ";
+    d3.showDist();
+    d4.add_dist(d2, d3);
+    cout<<"\nd4 = ";
+    d4.showDist();
 
     return 0;
 }
 // Function Definitions
+/* Belongs to the class. A method for members only
+ * Template: type CLASSNAME::Function_name()
+ * 1) Declare prototype inside class
+ * 2) Definition is outside class
+ * 3) Use the scope resolution operator :: */
+void Distance::add_dist(Distance d1, Distance d2)
+{
+    inches = d1.inches + d2.inches;     // add the inches
+    feet = 0;
+    if(inches >= 12.0)
+    {
+        inches -= 12.0;
+        feet++;                 // check for extra foot
+    }
+    feet += d1.feet + d2.feet;  // add feet
+}
